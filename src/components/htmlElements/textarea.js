@@ -1,7 +1,7 @@
 
 function TextArea (props) {
     return (
-        <textarea value={props.value} onChange={props.inputEvent}/>
+        <textarea required value={props.value} onChange={props.inputEvent} placeholder={props.text}/>
     );
 };
 
