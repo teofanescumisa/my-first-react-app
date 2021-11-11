@@ -20,6 +20,11 @@ const StyledForm = styled(Form)`
     input {
         border-radius:15px
     }
+    button {
+        width:170px;
+        margin: 12px auto 0;
+        padding: 10px;
+    }
 `
 
 function Form ({ className, children }) {
