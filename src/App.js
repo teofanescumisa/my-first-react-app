@@ -1,8 +1,21 @@
+import { Route, Routes } from 'react-router';
 import './App.css';
+import HomePage from './components/mainPage/homePage';
+import About from './components/mainPage/aboutPage';
+import Contact from './components/mainPage/contactPage';
+import Projects from './components/mainPage/projects';
+import PageNotFound from './components/pageNotFound';
 
 function App() {
   return (
-    <h1>Hello World</h1>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/projects" element={<Projects />} />
+
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
   );
 }
 
