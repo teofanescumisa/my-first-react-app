@@ -7,49 +7,50 @@ import Button from "../htmlElements/button";
 
 
 function ContactPage () {
-    const [name,setName] = useState("");
-    const [email,setEmail] = useState("");
-    const [phone,setPhone] = useState("");
-    const [message,setMessage] = useState("");
-    
-    function changeName (event) {
-        setName(event.target.value);
-    }
-    function changeEmail (event) {
-        setEmail(event.target.value);
-    }
-    function changePhone (event) {
-        setPhone(event.target.value);
-    }
-    function changeMessage (event){
-        setMessage(event.target.value);
+    const [state,setState] = useState({
+        name:"",
+        email:"",
+        phone:"",
+        message:"",
+    })
+    function onChangeHandler (e) {
+        const target = e.target;
+        const name= target.name;
+        const value = target.value;
+        
+        setState((prevState) => ({
+            ...prevState,
+            [name]:value,
+        }))   
     }
     function submitButton (event) {
-        if(name && email && phone && message){
+        if(state.name.length > 1 && state.email && state.phone && state.message){ // More complex check with HTML5 if needed & same check will be in this line.
             event.preventDefault();
-            setName("");
-            setEmail("");
-            setPhone("");
-            setMessage("");
-
-            console.log("message saved on server !")
+            setState({
+            name:"",
+            email:"",
+            phone:"",
+            message:"",
+            });
+            console.log(state); // Or send {state} to API with method Post
         }
     }
+    
     return (
         <StyledForm>
             <section>
                 <label>Name</label>
-                <Input placeholder='Full Name' value={name} inputEvent={changeName} name="name" type='text'/>
+                <Input placeholder='Full Name' value={state.name} inputEvent={onChangeHandler} name="name" type='text'/>
             </section>
             <section>
                 <label>Email</label>
-                <Input placeholder='Email' value={email} inputEvent={changeEmail} name="email" type='email'/>
+                <Input placeholder='Email' value={state.email} inputEvent={onChangeHandler} name="email" type='email'/>
             </section>
             <section>
                 <label>Phone Number</label>
-                <Input placeholder='Mobil Phone Number' value={phone} inputEvent={changePhone} name="phoneNumber" type='number'/>
+                <Input placeholder='Mobil Phone Number' value={state.phone} inputEvent={onChangeHandler} name="phone" type='number'/>
             </section>
-            <TextArea value={message} inputEvent={changeMessage} text='Type Your Message Here '/>
+            <TextArea name="message" value={state.message} inputEvent={onChangeHandler} text='Type Your Message Here '/>
             <Button btnEvent={submitButton} text="Send Message" />
         </StyledForm>
     );
