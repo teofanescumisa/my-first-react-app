@@ -1,7 +1,9 @@
 import { useState } from "react";
 import SectionTable from "./tableSection";
 
-import PayTableContainer from "./styledContainer";
+import PayTableContainer from "./styledTableContainer";
+import HistoryGameContainer from "./styledHistoryGameContainer";
+import GameCounter from "./gameCounter";
 
 function VideoPoker () {
     const tableInfo ={
@@ -17,6 +19,8 @@ function VideoPoker () {
     const[poker,setPoker]=useState({
         bet:3,
         score:100,
+        winCounter:0,
+        loseCounter:0,
     });
     const {bet , score} = poker;
     return (
@@ -31,7 +35,12 @@ function VideoPoker () {
             <SectionTable winText='3 of Kind' winScore={tableInfo.threeofkind * bet}/>
             <SectionTable winText='2 Pair' winScore={tableInfo.twopair * bet}/>
         </PayTableContainer>
-        <p>Hello World</p>
+        <HistoryGameContainer>
+            <GameCounter win={poker.winCounter} lose={poker.loseCounter}/>
+            <section>
+                <p>win</p>
+            </section>
+        </HistoryGameContainer>
         </div>
     );
 };
