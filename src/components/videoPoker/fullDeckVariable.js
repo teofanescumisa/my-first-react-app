@@ -221,7 +221,7 @@ const fullDeck = [
     },
     {
         name : "Seven of Heart",
-        link : "./img/cardDeck/Heart/7_of_heart.svg",
+        link : "./img/Heart/7_of_heart.svg",
         value: "07",
         type: "heart",
         keep:false,

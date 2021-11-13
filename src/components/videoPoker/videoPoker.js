@@ -10,8 +10,9 @@ import fullDeck from "./fullDeckVariable";
 import CardGame from "./cardGame";
 import StyledCardGameContainer from "./cardGameContainer";
 
-const gameDeck =[...fullDeck];
-
+let gameDeck =[...fullDeck];
+let idGenerator =0;
+const lastHands = []; // MAP this and add it to last hands played !
 const noCard = './img/Deck.jpg';
 const tableInfo ={
     royalflush:300,
@@ -23,7 +24,6 @@ const tableInfo ={
     threeofkind:5,
     twopair:3,
 }
-
 function VideoPoker () {
     const [card1,setCard1] = useState({name:"",link:"",value:"",type:"",keep:false});
     const [card2,setCard2] = useState({name:"",link:"",value:"",type:"",keep:false});
@@ -33,14 +33,15 @@ function VideoPoker () {
     
     const[poker,setPoker]=useState({
         gameStage:0,
-        btnText:"Start New Game",
         bet:1,
         score:100,
         winCounter:0,
         loseCounter:0,
-        gameText:"Select Your Bet And Click The Start Game Button !",
+        gameStatus:"",
+        btnText:"Start New Game",
+        gameText:"Select Your Bet And Click Start New Game !",
     });
-    const {bet , score , winCounter , loseCounter,gameText , gameStage , btnText} = poker;
+    const {bet , score , winCounter , loseCounter,gameText , gameStage , btnText , gameStatus} = poker;
 
         function onBetChange (event) {
             const btnType = event.target.name;
@@ -61,17 +62,59 @@ function VideoPoker () {
             if(card === 'card5') {card5.keep === true ? setCard5((prevState)=> ({...prevState,keep:false,})) : setCard5((prevState)=> ({...prevState,keep:true,}))}
         }}
         function gameButton (event) {
-            if(gameStage === 0) {
+            if(gameStage === 0 && score > 0) {
                 exchangeCards();
                 setPoker((prevState)=>({
                     ...prevState,
                     gameStage:1,
                     score:prevState.score - prevState.bet,
                     btnText:"Exchange Cards",
-                    gameText:"Click on card you wanna take next stage ! The other will swap with a random card. Click 'Exchange Cards' to continue .",
+                    gameText:"Click on the card to hold it to next game !",
                 }))
             }
+            if(gameStage === 1) {
+                exchangeCards();
+                setCard1((prevState)=>({...prevState,keep:false}));
+                setCard2((prevState)=>({...prevState,keep:false}));
+                setCard3((prevState)=>({...prevState,keep:false}));
+                setCard4((prevState)=>({...prevState,keep:false}));
+                setCard5((prevState)=>({...prevState,keep:false}));
 
+                winVerification();
+
+                setPoker((prevState)=>({
+                    ...prevState,
+                    gameStage:2,
+                }))
+            }
+            if(gameStage === 2) {
+                idGenerator +=1;
+                lastHands.unshift({
+                    id:idGenerator,
+                    cardOne:card1.name,
+                    cardTwo:card2.name,
+                    cardThree:card3.name,
+                    cardFour:card4.name,
+                    cardFive:card5.name,
+                    status:gameStatus,
+                });
+                if(lastHands.length >7) lastHands.length = 7;
+                setCard1({name:"",link:"",value:"",type:"",keep:false});
+                setCard2({name:"",link:"",value:"",type:"",keep:false});
+                setCard3({name:"",link:"",value:"",type:"",keep:false});
+                setCard4({name:"",link:"",value:"",type:"",keep:false});
+                setCard5({name:"",link:"",value:"",type:"",keep:false});
+                gameDeck.length=0;
+                gameDeck=[...fullDeck];
+                if(bet > score) setPoker((prevState)=>({...prevState,bet:score}));
+                setPoker((prevState)=> ({
+                    ...prevState,
+                    gameStatus:"",
+                    gameStage:0,
+                    btnText:"Start New Game",
+                    gameText:"Select Your Bet And Click Start New Game !",
+                }))
+            }
         }
         function exchangeCards (){
             if(card1.keep === false) {
@@ -99,6 +142,12 @@ function VideoPoker () {
                 const newCard = gameDeck.splice(index,1);
                 setCard5(...newCard);
             }
+        }
+        function winVerification (){
+            //Do something here
+
+
+            // change STATE => score + btn message + gameText
         }
     return (
 <>
