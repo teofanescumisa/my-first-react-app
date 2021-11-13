@@ -10,6 +10,9 @@ import styled from "styled-components";
      display flex;
      justify-content:space-around;
      padding: 0 35px;
+     p {
+         font-weight:bold;
+     }
  }
  section{
     padding: 0 35px;

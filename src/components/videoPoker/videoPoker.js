@@ -21,9 +21,11 @@ function VideoPoker () {
         score:100,
         winCounter:0,
         loseCounter:0,
+        gameText:"Select Your Bet And Click The Start Game Button !",
     });
-    const {bet , score} = poker;
+    const {bet , score , winCounter , loseCounter,gameText} = poker;
     return (
+<>
         <div style={{display: 'grid', gridTemplateColumns:'1fr 1fr'}} >
         <PayTableContainer>
             <SectionTable winText='Royal Flush' winScore={tableInfo.royalflush * bet}/>
@@ -36,12 +38,15 @@ function VideoPoker () {
             <SectionTable winText='2 Pair' winScore={tableInfo.twopair * bet}/>
         </PayTableContainer>
         <HistoryGameContainer>
-            <GameCounter win={poker.winCounter} lose={poker.loseCounter}/>
+            <GameCounter win={winCounter} lose={loseCounter}/>
             <section>
-                <p>win</p>
+                <p> To add this section soon...</p> 
             </section>
         </HistoryGameContainer>
         </div>
+
+        <p>{gameText}</p>
+</>
     );
 };
 
