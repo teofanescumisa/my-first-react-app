@@ -4,6 +4,7 @@ import SectionTable from "./tableSection";
 import PayTableContainer from "./styledTableContainer";
 import HistoryGameContainer from "./styledHistoryGameContainer";
 import GameCounter from "./gameCounter";
+import PokerText from "./styledParagraph";
 
 function VideoPoker () {
     const tableInfo ={
@@ -44,8 +45,7 @@ function VideoPoker () {
             </section>
         </HistoryGameContainer>
         </div>
-
-        <p>{gameText}</p>
+        <PokerText>{gameText}</PokerText>
 </>
     );
 };
